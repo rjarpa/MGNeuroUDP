@@ -64,11 +64,11 @@ S1_3=randn(1,N_3)
 S2_3=0:delta_t_3:T_3 % serie de tiempo
 
 
-%4
+%% 4
 
 Fs_4= Fs_3/2
 
-% 5
+%% 5
 %Tanto para S1 como para S2, construya vectores 
 % de tiempo en que 
 % el tiempo = 0 corresponda a:
@@ -135,4 +135,82 @@ S2_7_3=0:delta_t_7_3:T_7_3 % serie de tiempo
 % en segundos, pero cada uno con diferente número de elementos.
 
 
+T_8=800
 
+delta_t_8_1=0.003
+delta_t_8_2=0.03
+delta_t_8_3=0.3
+
+N_8_1=T_8/delta_t_8_1
+N_8_2=T_8/delta_t_8_2
+N_8_3=T_8/delta_t_8_3
+
+S2_8_1=0:delta_t_8_1:T_8
+S2_8_2=0:delta_t_8_2:T_8
+S2_8_3=0:delta_t_8_3:T_8
+
+% 9
+% En un cierto experimento de neurociencia cognitiva, 
+% cada trial dura 1250 ms.
+
+
+N_9=1000/1250 % cantidad de muestras por segundo
+%delta_t=1/1250 
+delta_trial_9=1/N_9
+
+
+% a. Construya un vector de tiempo que sirva para cada trial,
+%     suponiendo que la frecuencia de muestreo es 1000 Hz.
+
+
+Fs_9_a=1000
+T_9=N_9/Fs_9_a
+%S2_9_a=0:delta_t_9:10*delta_t_9*10
+%S2_9_a=(0:0.001:10*1.25*10)'
+S2_9_a=(1:1:1250)';
+S2_9_a=S2_9_a/1000;
+%S2_9_a=(0:0.001:1.25)';
+
+%b. Construye 10 series de tiempo (números aleatorios) 
+%   correspondientes a 10 trials de este experimento.
+
+N_9_b=1250
+%S1_9_arra=[]
+
+
+S1_9_arra=randn(N_9_b,10)
+
+%c. Normaliza el vector de tiempo usando como tiempo = 0 
+%    el momento de presentación
+%   del estímulo, que ocurre 350 ms luego de iniciado el trial.
+
+S2_9_d=S2_9_a-.350;
+
+
+%d. Grafica algunos trials utilizando el vector de tiempo normalizado.
+
+figure;
+%plot(S2_9_d, S1_9_arra(:,[2:4]))
+plot(S2_9_d, S1_9_arra(:,[2]))
+figure;
+%plot(S2_9_d, S1_9_arra(:,[2:4]))
+plot(S2_9_d, S1_9_arra(:,[3]))
+
+
+
+%% 11
+
+
+n_trials=5
+c_channels=10
+s_subjects=20
+
+arra_11=randn(n_trials,c_channels,s_subjects);
+
+arra_11_show=[]
+
+for i = 1:s_subjects
+   
+    arra_11_show(i).subject=i
+    arra_11_show(i).trialschannel=arra_11(:,:,i);
+end
