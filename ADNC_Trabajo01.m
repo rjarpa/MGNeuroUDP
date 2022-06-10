@@ -288,7 +288,7 @@ participant_list=1:length(dtnames);
 figure('Name','Figure 7');
 hold on;
 imagesc(t,participant_list,M_mean);
-xlabel('Pupil Diameter');
+xlabel('Time (s)');
 ylabel('Participants ID');
 vticks=1:14;
 yticks(vticks)
@@ -304,19 +304,24 @@ M_std_total=std(M_mean,'omitnan');
 figure('Name','Figure 8');
     hold on;
 
-    plot(t,M_mean); % promedios de cada participante
-    
+    p1=plot(t,M_mean,'.','Color',  [0.5 0.5 0.5]); % promedios de cada participante
+    p2=plot(t,M_mean_total,'ok'); % Promedios de promedios
 
-    plot(t,M_mean_total,'ok'); % Promedios de promedios
+    pos_sd=(M_mean_total')+(M_std_total');
+   neg_sd =(M_mean_total')-(M_std_total');
+    p3=plot(t,pos_sd,'or','LineWidth', 2)
+    p4=plot(t,neg_sd,'ob','LineWidth', 2)
+    patch([t(:); flipud(t(:))], [neg_sd;  flipud(pos_sd)], 'r', 'FaceAlpha',0.2, 'EdgeColor','none')
 
-    plot(t,(M_mean_total')+(M_std_total'),'or')
-    plot(t,(M_mean_total')-(M_std_total'),'ob')
     xlabel('Time (s)');
     ylabel('Pupil Diameter ');
 
-    labels=[dtnames;'mean';'+sd';'-sd'];
-    legend(labels);
+   % labels=[dtnames;'mean';'+sd';'-sd'];
+    %labels=['individuals means';'mean';'+sd';'-sd'];
+    %legend(labels);
 
 
-    
-    
+
+    lgd = legend([p1(1) p2(1) p3(1) p4(1)], 'individuals','mean','+sd','-sd');
+
+    title(lgd,'legend')
