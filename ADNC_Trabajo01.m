@@ -385,7 +385,7 @@ M_std_total=std(M_mean,'omitnan');
 figure('Name','Figure 8');
     hold on;
 
-    % se grafica la informaciond de media de todos los individos  en gris
+    % se grafica la informacion de media de todos los individuos en gris
     p1=plot(t,M_mean,'.','Color',  [0.5 0.5 0.5]); % promedios de cada participante
     p2=plot(t,M_mean_total,'ok'); % Promedios de promedios
     % variables para almacenar la media + desviacion standard
