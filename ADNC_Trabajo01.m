@@ -61,7 +61,7 @@ load('WP_Pupil_Data')
 
 
 
-% Inicializando variables Variables
+%% Inicializando variables Variables
 
 INFO=getfield(PUPILDATA,'info');
 filter_min_n_trials=PUPILDATA.info.filter_min_n_trials;
@@ -73,7 +73,6 @@ participant_number=length(dtnames);
 epoch_before_after_s=INFO.epoch_before_after_s;
 
 
-%% 1
 
 
 participant_n=1; % Numero Indice del participante que se ocupara en el codigo.
@@ -116,6 +115,7 @@ total_s=sum(total_s);
     figure('Name',"Figure 2 - Part : " + dtnames{participant_n});
     % se grafica la media de un participante
     plot(t,epochs_Norm_mean')
+    title("Participante: " + dtnames{participant_n});
     legend ("Mean Normalization - " + getfield(INFO,Norm2Use));
     xlabel('Time (s)');
     ylabel('Pupil Diameter ');
@@ -160,9 +160,10 @@ for i=1:3
     subplot(3,1,i);
     % se grafican los valores del arreglo
     plot(t,M(i,:)');
+    title("Participante: " + dtnames{participant_n});
     legend ("Mean Normalization - " + getfield(INFO,"Norm" + i))
     xlabel('Time (s)');
-    ylabel('Pupil Diameter ');
+    ylabel("Pupil Diameter" );
 end
 
 
@@ -199,6 +200,7 @@ end
     plot(t,(epochs_Norm_mean')+(epochs_Norm_std'),'_r')
     % se grafica la media  - desviacion standard
     plot(t,(epochs_Norm_mean')-(epochs_Norm_std'),'_b')
+    title("Participante: " + dtnames{participant_n});
     legend ("Mean Normalization - " + getfield(INFO,Norm2Use),...
         "+sd Normalization - " + getfield(INFO,Norm2Use),...
         "-sd Normalization - " + getfield(INFO,Norm2Use))
@@ -235,6 +237,7 @@ end
     plot(t,logic_perf_1_mean')
     % graficar la media de seleccion errada
     plot(t,logic_perf_0_mean')
+    title("Participante "+dtnames{participant_n});
     xlabel('Time (s)');
     ylabel('Pupil Diameter ');
     legend('Perfomance OK', 'Perfomance NoK')
@@ -290,8 +293,9 @@ min_value=min(sum(M_mean-M_std));
     plot(t,M_mean(i,:)'+M_std(i,:)','_r')
     % se grafica la media - desviacion standard
     plot(t,M_mean(i,:)'-M_std(i,:)','_b')
+    title("Participante: " + dtnames{participant_n});
     xlabel('Time (s)');
-    ylabel('Pupil Diameter ');
+    ylabel("Pupil Diameter " );
     legend('mean','+sd','-sd');
     ylim([min_value max_value])
     hold off;
@@ -359,9 +363,10 @@ participant_list=1:length(dtnames);
 figure('Name','Figure 7');
 hold on;
 % se genera el rasterplot graficando en Y los nombres de participantes y en
-% X el tiempo de la respuesta pupilar y el en promedio con la magnitud de
+% X el tiempo de la respuesta pupilar y el promedio con la magnitud de
 % colores
 imagesc(t,participant_list,M_mean); shading flat;
+title("Promedio Diametro Pupilar Participantes");
 xlabel('Time (s)');
 ylabel('Participants ID');
 vticks=1:14;
@@ -395,6 +400,7 @@ figure('Name','Figure 8');
    % se grafican ambas variables anteriores
     p3=plot(t,pos_sd,'or','LineWidth', 2);
     p4=plot(t,neg_sd,'ob','LineWidth', 2);
+    title("Promedio Total vs Promedios individuales ")
     % se genera un Shade entre el valor de media y la desviacion standard
     % +/-
     patch([t(:); flipud(t(:))], [neg_sd;  flipud(pos_sd)], 'r', 'FaceAlpha',0.2, 'EdgeColor','none')
