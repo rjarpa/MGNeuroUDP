@@ -58,7 +58,7 @@ total_s=sum(abs(ind));
 n_samples=round(total_s*srate);
     t=0:n_samples; 
     t=(t)/srate;
-    t=t+abs(ind(1));
+    t=t-abs(ind(1));
 
 startMeventype1=Meventype1+pos(1);
 finMeventype1=Meventype1+pos(2);
@@ -161,6 +161,10 @@ for i=1:length(startMeventype2)
     MAA2_ch(i,:)= zscore( EEGmat_mean(startMeventype2(i):finMeventype2(i)));
 
 end 
+
+
+figure;
+imagesc(t,startMeventype1,MAA_ch); shading flat;
 
 figure;
 hold on;
