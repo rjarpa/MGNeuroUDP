@@ -28,9 +28,9 @@ plot(eventtype);
 %srate 512 sample per second (hertz)
 
 
-t=0:delta_t:T
-t=(0:length(EEGmat))/srate
-t=t(1:length(t)-1)
+t=0:delta_t:T;
+t=(0:length(EEGmat))/srate;
+t=t(1:length(t)-1);
 
 
 figure;
@@ -40,8 +40,8 @@ figure;
 chan2plot=60;
 
 plot(t,EEGmat([chan2plot],:));
-xlabel("Time (s)")
-title("Channel:  " + channames(chan2plot))
+xlabel("Time (s)");
+title("Channel:  " + channames(chan2plot));
 
 eventype1=30;
 Meventype1=event_indices(eventtype==eventype1);
@@ -82,7 +82,8 @@ end
 
 figure;
 imagesc(t,startMeventype1,MAA); shading flat;
-
+cb=colorbar;
+ylabel()
 
 figure;
 hold on;
