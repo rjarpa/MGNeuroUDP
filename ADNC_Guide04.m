@@ -43,9 +43,9 @@ plot(t,EEGmat([chan2plot],:));
 xlabel("Time (s)");
 title("Channel:  " + channames(chan2plot));
 
-eventype1=30;
+eventype1=20;
 Meventype1=event_indices(eventtype==eventype1);
-eventype2=20;
+eventype2=30;
 Meventype2=event_indices(eventtype==eventype2);
 %Mlogico=(EEGmat(1,:)==eventype1);   
 ind=[-0.150 1.2];
@@ -83,7 +83,7 @@ end
 figure;
 imagesc(t,startMeventype1,MAA); shading flat;
 cb=colorbar;
-ylabel()
+%ylabel()
 
 figure;
 hold on;
@@ -144,8 +144,38 @@ lgd = legend([p7(1) p8(1) p1(1) p2(1) p3(1) p4(1) p5(1) p6(1)],...
 %  title(lgd,'legend');
 
 
-
 %% i
+
+numchan = numel(channames);
+dimen=[length(startMeventype1) n_samples+1 numchan];
+MAA_ch1=nan(length(startMeventype1),n_samples+1,numchan);
+EEGmat_mean=mean(EEGmat);
+
+for j=1:numchan
+for i=1:length(startMeventype1)
+
+    
+    MAA_ch1(i,:,j)= zscore(EEGmat(j,startMeventype1(i):finMeventype1(i)));
+end
+end
+
+%review=MAA_ch1(:,:,1);
+%review_mean=mean(review)
+review_total=mean(MAA_ch1);
+%review_total_mean=mean(review_total());
+PromChannels=nan(numchan,n_samples+1);
+for x=1:numchan
+    PromChannels(x,:)=review_total(1,:,x);
+end
+
+
+channels_id=1:numchan;
+
+figure;
+imagesc(t,channels_id',PromChannels); 
+shading flat;
+
+%% ii
 
 
 MAA_ch=nan(length(startMeventype1),n_samples+1);
@@ -174,13 +204,15 @@ p2=plot(t,MAA2_ch,'b');
 
 
 
- t_total=0:length(EEGmat_mean)-1; 
-    t_total=(t_total)/srate;
+t_total=0:length(EEGmat_mean)-1; 
+t_total=(t_total)/srate;
 figure;
 hold on;
 
 p1=plot(t_total,EEGmat_mean,'b');
 
+% en vez de mostrar todos los events 
+% promediar todos loseventos y mostrar todos los canales
 
 
 

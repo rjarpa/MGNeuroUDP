@@ -3,9 +3,9 @@ clear all;
 
 
 disp("Cargar Datos")
-path='D:\OneDrive\Magister - Neurociencias\TACA-TECNICAS DE ANALISIS CUANTITATIVO AVAN\DataSets_Behavior_CognitiveTasks\HUMAN_ULTIMATUM';
+%path='D:\OneDrive\Magister - Neurociencias\TACA-TECNICAS DE ANALISIS CUANTITATIVO AVAN\DataSets_Behavior_CognitiveTasks\HUMAN_ULTIMATUM';
 %HUMAN_ULTIMATUM
-%path='/Users/rjarpa/OneDrive/Magister - Neurociencias/TACA-TECNICAS DE ANALISIS CUANTITATIVO AVAN/DataSets_Behavior_CognitiveTasks/HUMAN_ULTIMATUM';
+path='/Users/rjarpa/OneDrive/Magister - Neurociencias/TACA-TECNICAS DE ANALISIS CUANTITATIVO AVAN/DataSets_Behavior_CognitiveTasks/HUMAN_ULTIMATUM';
 var_rescue_RT = 'RT_seq';
 AllData_RT=load_file(path,var_rescue_RT);
 
@@ -160,7 +160,7 @@ annotation('textbox',dim,'String',"Model Equation AR=" + B0+" + " + B1+ " * Offe
 
 hold off;
 
-print(f1, 'Tipo de oferta bloque 1 - Human', '-dpng', '-r350');
+print(f1, 'taca_tarea_final/Tipo de oferta bloque 1 - Human', '-dpng', '-r350');
 
 
 %simulacion de bloques sin caras
@@ -195,7 +195,7 @@ annotation('textbox',dim,'String',"Model Equation AR=" + B0+" + " + B1+ " * Offe
 
 
 hold off;
-print(f2, 'Tipo de oferta bloque 1 - Computer', '-dpng', '-r350');
+print(f2, 'taca_tarea_final/Tipo de oferta bloque 1 - Computer', '-dpng', '-r350');
 
 
 %simulacion de bloques con caras
@@ -295,7 +295,7 @@ annotation('textbox',dim,'String',"Model Equation AR=" + B0+" + " + B1+ " * Bloc
 
 hold off;
 
-print(f3, 'Modelo Lineal y Bloques Human Computer', '-dpng', '-r350');
+print(f3, 'taca_tarea_final/Modelo Lineal y Bloques Human Computer', '-dpng', '-r350');
 
 
 %simulacion de grupo de oferta y bloque REVISAR SI SE ESTA EVALUANDO DE
@@ -330,7 +330,7 @@ ylabel('Acceptance Rate');
 
 legend('Human ','Computer');
 hold off;
-print(f2_2, 'Modelo Lineal y Bloques Human Computer', '-dpng', '-r350');
+print(f2_2, 'taca_tarea_final/Modelo Lineal y Bloques Human Computer', '-dpng', '-r350');
 
 %realizar comparative del bloque 2 con los tipos de rostros
 %% Modelos con tipos de Human
@@ -439,7 +439,7 @@ annotation('textbox',dim,'String',"Model Equation R-square=" + LM_face.Rsquared.
 
 hold off;
 
-print(f4, 'Modelo Lineal Simple Caras', '-dpng', '-r350');
+print(f4, 'taca_tarea_final/Modelo Lineal Simple Caras', '-dpng', '-r350');
 
 
 
@@ -569,7 +569,7 @@ legend('% negative','% neutral','% positive','LM negative ','LM neutral', 'LM po
 
 hold off;
 
-print(f5_1,'Modelo Lineal valores de caras categorico mas  oferta', '-dpng', '-r350');
+print(f5_1,'taca_tarea_final/Modelo Lineal valores de caras categorico mas  oferta', '-dpng', '-r350');
 
 
 %% independiente
@@ -657,7 +657,7 @@ legend('% negative','% neutral','% positive','LM negative ','LM neutral', 'LM po
 
 hold off;
 
-print(f5,'Modelo Lineal valores de caras categorico mas  oferta', '-dpng', '-r350');
+print(f5,'taca_tarea_final/Modelo Lineal valores de caras categorico mas  oferta', '-dpng', '-r350');
 
 
 
@@ -1016,7 +1016,7 @@ chartBool=true;
 
 hold off;
 
-print(fx,figure_name, '-dpng', '-r350');
+print(fx,"taca_tarea_final/"+figure_name, '-dpng', '-r350');
 
 end
 
@@ -1054,7 +1054,7 @@ chartBool=true;
 
 hold off;
 
-print(fx,figure_name, '-dpng', '-r350');
+print(fx,"taca_tarea_final/"+figure_name, '-dpng', '-r350');
 
 end
 
