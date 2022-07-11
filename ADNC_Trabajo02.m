@@ -366,15 +366,20 @@ std_M_P1= std(M_P1,'omitnan');
 
 figure;
 hold on;
-p1=plot(f,mean_M_P1)
+p0=plot(f,M_P1,'Color',[0.6 0.6 0.6])
+p1=plot(f,mean_M_P1,'k')
 
 % variables para almacenar la media + desviacion standard
   pos_sd_M_P1=(mean_M_P1')+(std_M_P1');
     % variables para almacenar la media - desviacion standard
    neg_sd_M_P1 =(mean_M_P1')-(std_M_P1');
 
+
+
 p2=plot(f,pos_sd_M_P1,'b','LineWidth', 1);
 p3=plot(f,neg_sd_M_P1,'b','LineWidth', 1);
+
+
 
  %title("Promedio Total vs Promedios individuales ")
     % se genera un Shade entre el valor de media y la desviacion standard
