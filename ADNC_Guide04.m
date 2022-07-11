@@ -16,6 +16,9 @@ T=length(EEGmat)/srate;
 delta_t=1/srate;
 TMinute=T/60;
 
+
+
+
 % event_indices = indice de ventos 
 
 figure;
@@ -120,7 +123,7 @@ neg_sd_MAA=MAA_mean-MAA_sd;
 p1=plot(t,MAA_mean,'or');
 p2=plot(t,pos_sd_MAA,'r');
 p3=plot(t,neg_sd_MAA,'r');
-
+ 
 patch_shade_area(t,pos_sd_MAA,neg_sd_MAA,'r');
 
 pos_sd_MAA2=MAA2_mean+MAA2_sd;

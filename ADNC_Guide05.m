@@ -18,7 +18,7 @@ theta2=0;
 
 
 y1=A1*sin(2*pi*f1*t + theta1);
-y2=A2*sin(2*pi*f2*t + theta2)
+y2=A2*sin(2*pi*f2*t + theta2);
 
 
 
@@ -175,10 +175,7 @@ end
 
 
 figure;
-
-
 subplot(211); hold  on
-
 plot(t,arrawaves(1,:));
 plot(t,arrawaves(10,:));
 plot(t,arrawaves(100,:));
