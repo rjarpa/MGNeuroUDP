@@ -2,6 +2,7 @@
 
 % document matlab
 %% example noisy signal
+clear all
 Fs = 1000;            % Sampling frequency                    
 T = 1/Fs;             % Sampling period   delta_t    
 L = 1500;             % Length of signal
@@ -34,9 +35,27 @@ P2 = abs(Y/L);
 P1 = P2(1:L/2+1);
 P1(2:end-1) = 2*P1(2:end-1);
 
-
 f = Fs*(0:(L/2))/L;
+
+
+figure;
 plot(f,P1) 
+title('Single-Sided Amplitude Spectrum of X(t)')
+xlabel('f (Hz)')
+ylabel('|P1(f)|')
+
+
+
+P2_2=abs(Y).^2;  %espectro de poder doble
+P1_1=P2_2(1:(L/2)+1);  % espectro de poder single
+nFourier=(L/2)+1; 
+df_2=Fs/L; % %resolución en frecuencia (Hz)
+f_2=0:df_2:(Fs/2); % frecuencia 
+
+
+figure;
+
+plot(f_2,P1_1) 
 title('Single-Sided Amplitude Spectrum of X(t)')
 xlabel('f (Hz)')
 ylabel('|P1(f)|')

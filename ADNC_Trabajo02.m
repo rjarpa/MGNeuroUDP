@@ -218,7 +218,8 @@ hold on;
 plot(t3,subset_mean_arrachan1);
 plot(t3,subset_mean_arrachan2);
 xlim([time_before_event_s*-1 time_after_event_s])
-
+ylabel("Power");
+xlabel("Time to event (s)");
 
 %% 4
 % Produzca el mismo gráfico de la pregunta anterior, pero esta vez 
@@ -295,7 +296,7 @@ end
 
 listchans=1:nbchan;
 element_before_5 = round(time_before_event_s_5 / dt) %se obtienen cuantos elementos antes evento
-element_after_5 = round(time_after_event_s_5 / dt) % se obtiene ceuantos elementos son 350 ms
+element_after_5 = round(time_after_event_s_5 / dt) % se obtiene ceuantos elementos 
 
 start_index_5=n_samples_before_after(1)-element_before_5;
 end_index_5=n_samples_before_after(1)+element_after_5+1;
@@ -314,16 +315,56 @@ xlabel('Time to Event');
 
 %% 7
 
-T=time_before_event_s_5+time_after_event_s_5
-numchan7=11;
-epoch = 150;
 
-%N=pnts; % el numero de muestras
-N=round(T*Fs); 
+% INICIO eliminar
+% usar rasterpolot para seleccionar el canal adecuado
+
+M_ERP_chan_all=nan(nbchan,pnts)
+
+for i=1:nbchan
+% por cada canal se promediara
+
+    
+    temp_arrachan_raw=transpose(squeeze(data(i,:,:)));
+
+    %Normalize
+        %for j=1:numel(trials)
+        %    temp_arrachan(i,:)=zscore(temp_arrachan_raw(i,:));
+        % end
+
+     M_ERP_chan_all(i,:)=mean(temp_arrachan_raw,'omitnan');
+end
+figure;
+hold on;
+imagesc(t,listchans,M_ERP_chan_all); 
+ylabel("Channels (Trials)");
+xlabel("Time to event (s)");
+
+
+figure;
+hold on;
+imagesc(t,listchans,M_ERP_chan_all); 
+% INICIO eliminar FIN
+
+
+
+
+%T=time_before_event_s_5+time_after_event_s_5
+numchan7=76;
+epoch = 20;
+
+N=pnts; % el numero de muestras
+%N=round(pnts*Fs); 
 arrachan_raw_7=squeeze(data(numchan7,:,epoch));
 
+
+figure;
+hold on;
+plot(t,arrachan_raw_7); 
+
 Y=fft(arrachan_raw_7);  % resultado de fft (complejo)
-P2=abs(Y).^2;  %espectro de poder doble
+%P2=abs(Y/2).^2;  %espectro de poder doble
+P2=abs(Y/N);  %espectro de poder doble
 P1_individual=P2(1:(N/2)+1);  % espectro de poder single
 nFourier=(N/2)+1; 
 df=Fs/N; % %resolución en frecuencia (Hz)
@@ -331,32 +372,63 @@ f=0:df:(Fs/2); % frecuencia
 
 
 
+%INICIO Validar
+P2_2 = abs(Y/N);
+P1_2 = P2_2(1:N/2+1);
+P1_2(2:end-1) = 2*P1_2(2:end-1);
+f_2 = Fs*(0:(N/2))/N;
+figure;
+plot(f_2,P1_2)
+xlabel('Frequency (Hz)')
+ylabel('Power')
+% FIN VAlidar
+
 M_P1=nan(trials,N/2+1);
 %ciclo para el calculo de los espectros indivduales de cada trial
 for i=1:trials
 
     arrachan_raw_7=squeeze(data(numchan7,:,i));
     Y=fft(arrachan_raw_7);  % resultado de fft (complejo)
-P2=abs(Y).^2;  %espectro de poder doble
+%P2=abs(Y/N).^2;  %espectro de poder doble
+P2=abs(Y/N);  %espectro de poder doble
 M_P1(i,:)=P2(1:(N/2)+1);  % espectro de poder single
 
 end
 
 mean_M_P1=mean(M_P1,'omitnan');
+sum_M_P1=mean(M_P1,'omitnan');
 
 figure;
 subplot(2,1,1);
 plot(f,P1_individual)
+title("FFT Individual - Channel " + num2str(numchan7)  + " epoch " + num2str(epoch))
 xlabel('Frequency (Hz)')
 ylabel('Power')
 %xlim([0 120])
 subplot(2,1,2);
 plot(f,mean_M_P1);
+title("FFT Individual - Channel " + num2str(numchan7) )
 xlabel('Frequency (Hz)')
 ylabel('Power')
 
 
+%figure;
+%subplot(2,1,1);
+%plot(f,M_P1)
+%xlabel('Frequency (Hz)')
+%ylabel('Power')
+%xlim([0 120])
+%subplot(2,1,2);
+%plot(f,sum_M_P1);
+%xlabel('Frequency (Hz)')
+%ylabel('Power')
 
+
+figure;
+hold on;
+imagesc(t,listepochs,M_P1); 
+ylabel("Trials (Trials)");
+xlabel("Time to event (s)");
 
 
 %% 8 
@@ -388,7 +460,7 @@ patch([f(:); flipud(f(:))], [neg_sd_M_P1;  flipud(pos_sd_M_P1)], 'b', 'FaceAlpha
 xlabel('Frequency (Hz)')
 ylabel('Power')
 
-return;
+
 %% 9 tapper gausiano
 
 % tamño de la ventana
@@ -396,6 +468,57 @@ return;
 
 winsize=0.1
 winstep=0.01
+
+GW=gausswin(pnts)'
+
+arrachan_raw_9=squeeze(data(numchan7,:,epoch));
+X_gauss=GW.*arrachan_raw_9
+
+
+Y=fft(X_gauss);  % resultado de fft (complejo)
+P2=abs(Y/N);  %espectro de poder doble
+P1_Gauss_ind=P2(1:(N/2)+1);  % espectro de poder single
+nFourier=(N/2)+1; 
+df=Fs/N; % %resolución en frecuencia (Hz)
+f=0:df:(Fs/2); % frecuencia 
+
+
+
+figure;
+hold on;
+imagesc(t,listepochs,P1_Gauss_ind); 
+ylabel("Trials (Trials)");
+xlabel("Time to event (s)");
+
+
+
+M_P1_gauss=nan(trials,N/2+1);
+%ciclo para el calculo de los espectros indivduales de cada trial
+for i=1:trials
+
+    arrachan_raw_9=squeeze(data(numchan7,:,i));
+    X_gauss=GW.*arrachan_raw_9
+    Y=fft(X_gauss);  % resultado de fft (complejo)
+P2=abs(Y/N);  %espectro de poder doble
+M_P1_gauss(i,:)=P2(1:(N/2)+1);  % espectro de poder single
+
+end
+
+mean_M_P1_gauss=mean(M_P1_gauss,'omitnan');
+
+
+figure;
+subplot(2,1,1);
+plot(f,P1_Gauss_ind)
+title("Taper Gaussiano Individual - Channel " + num2str(numchan7)  + " epoch " + num2str(epoch))
+xlabel('Frequency (Hz)')
+ylabel('Power')
+%xlim([0 120])
+subplot(2,1,2);
+plot(f,mean_M_P1_gauss);
+title("Taper Gaussiano Individual - Channel "  + num2str(numchan7)  )
+xlabel('Frequency (Hz)')
+ylabel('Power')
 
 
 % chronux mtspecgramc
